@@ -3,6 +3,7 @@ class CreateStoreListing < ActiveRecord::Migration[5.1]
     create_table :store_listings do |t|
       t.string :name
       t.string :package
+      t.text :description
       t.float :price
       t.float :rating
       t.integer :rating_count
