@@ -5,4 +5,3 @@ namespace :scraping do
     ProcessStoreListingJob.perform_later(listing)
   end
 end
-end

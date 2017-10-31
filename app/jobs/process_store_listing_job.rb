@@ -1,4 +1,6 @@
 class ProcessStoreListingJob < ActiveJob::Base
+  queue_as :mobile_galaxy_default
+
   def perform(store_listing)
     store_listing.parse
     store_listing.process_similar
