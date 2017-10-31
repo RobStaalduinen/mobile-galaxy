@@ -1,8 +1,8 @@
 class CreateStoreListing < ActiveRecord::Migration[5.1]
   def change
     create_table :store_listings do |t|
-      t.string :name
-      t.string :package
+      t.string :name, index: true
+      t.string :package, index: true
       t.text :description
       t.float :price
       t.float :rating

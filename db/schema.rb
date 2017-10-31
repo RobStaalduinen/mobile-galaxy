@@ -10,30 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917150632) do
+ActiveRecord::Schema.define(version: 20171031145258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "delayed_jobs", force: :cascade do |t|
-    t.integer "priority", default: 0, null: false
-    t.integer "attempts", default: 0, null: false
-    t.text "handler", null: false
-    t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string "locked_by"
-    t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
-  end
 
   create_table "developers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_genres_on_name"
+  end
+
+  create_table "ios_genres", force: :cascade do |t|
+    t.integer "ios_store_listing_id"
+    t.integer "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_ios_genres_on_genre_id"
+    t.index ["ios_store_listing_id"], name: "index_ios_genres_on_ios_store_listing_id"
+  end
+
+  create_table "ios_search_terms", force: :cascade do |t|
+    t.string "term"
+    t.index ["term"], name: "index_ios_search_terms_on_term"
+  end
+
+  create_table "ios_store_listings", force: :cascade do |t|
+    t.string "name"
+    t.string "bundle"
+    t.text "description"
+    t.string "icon_url"
+    t.integer "developer_id"
+    t.float "price"
+    t.float "rating"
+    t.integer "rating_count"
+    t.string "category"
+    t.string "track_number"
+    t.datetime "parsed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bundle"], name: "index_ios_store_listings_on_bundle"
+    t.index ["name"], name: "index_ios_store_listings_on_name"
+    t.index ["track_number"], name: "index_ios_store_listings_on_track_number"
   end
 
   create_table "recommendations", force: :cascade do |t|
@@ -60,7 +85,9 @@ ActiveRecord::Schema.define(version: 20170917150632) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "developer_id"
-    t.string "cover_picture_url"
+    t.string "cover_image_url"
+    t.index ["name"], name: "index_store_listings_on_name"
+    t.index ["package"], name: "index_store_listings_on_package"
   end
 
 end

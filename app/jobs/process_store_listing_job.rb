@@ -1,5 +1,5 @@
 class ProcessStoreListingJob < ActiveJob::Base
-  queue_as :mobile_galaxy_default
+  queue_as :android_scraping
 
   def perform(store_listing)
     store_listing.parse
