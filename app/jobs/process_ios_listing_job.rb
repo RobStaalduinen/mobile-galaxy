@@ -2,9 +2,10 @@ class ProcessIosListingJob < ActiveJob::Base
   queue_as :ios_scraping
 
   def perform(search_term)
-    return nil if IosSearchTerm.where(term: search_term).any?
+    ios_search_term = IosSearchTerm.find_or_create_by(term: search_term)
+    return nil if ios_search_term.parsed_at >= Time.now - 1.week
 
-    IosSearchTerm.create(term: search_term)
+    ios_search_term.update(parsed_at: Time.now)
 
     ITunesSearchAPI.search(term: search_term, media: "software").each do |ios_listing|
       listing = IosStoreListing.create_from_search_result(ios_listing)
@@ -16,5 +17,5 @@ class ProcessIosListingJob < ActiveJob::Base
       end
     end
   end
-  
+
 end

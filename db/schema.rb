@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20171031145258) do
 
   create_table "ios_search_terms", force: :cascade do |t|
     t.string "term"
+    t.datetime "parsed_at", default: "1970-01-01 00:00:00"
     t.index ["term"], name: "index_ios_search_terms_on_term"
   end
 
