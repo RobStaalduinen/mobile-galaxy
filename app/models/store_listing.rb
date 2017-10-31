@@ -2,6 +2,8 @@ class StoreListing < ActiveRecord::Base
   belongs_to :developer, optional: true
   has_many :recommendations
 
+  scope :parsed, -> { where.not(parsed_at: nil) }
+
   def parse
     self.update(
       name: app.title,
@@ -12,7 +14,7 @@ class StoreListing < ActiveRecord::Base
       rating_count: app.votes,
       category: app.category,
       store_url: app.store_url,
-      cover_image_url: app.cover_image_url
+      cover_image_url: app.cover_image_url,
       installs: app.installs,
       parsed_at: Time.now
     )
