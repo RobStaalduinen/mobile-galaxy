@@ -1,5 +1,7 @@
 :pidfile: tmp/pids/sidekiq.pid
 :logfile: log/sidekiq.log
-:concurrency: 5
+:concurrency: 6
 :queues:
   - [mobile_galaxy_default, 1]
+  - [android_scraping, 1]
+  - [ios_scraping, 1]
