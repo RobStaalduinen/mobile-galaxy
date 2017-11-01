@@ -1,4 +1,6 @@
-class StoreListing < ActiveRecord::Base
+class AndroidStoreListing < ActiveRecord::Base
+  include Genreable
+
   belongs_to :developer, optional: true
   has_many :recommendations
 
@@ -12,19 +14,20 @@ class StoreListing < ActiveRecord::Base
       price: app.price,
       rating: app.rating,
       rating_count: app.votes,
-      category: app.category,
       store_url: app.store_url,
       cover_image_url: app.cover_image_url,
       installs: app.installs,
       parsed_at: Time.now
     )
 
+    self.add_genre(app.category)
+    
     self.update(developer: Developer.find_or_create_by({ name: app.developer }))
   end
 
   def process_similar
     app.similar.each do |s|
-      listing = StoreListing.find_or_create_by(package: s[:package])
+      listing = AndroidStoreListing.find_or_create_by(package: s[:package])
       self.recommendations.create(recommended_listing: listing, rating: 1)
     end
   end

@@ -5,6 +5,6 @@ class CreateDeveloper < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
 
-    add_column :store_listings, :developer_id, :integer, index: true
+    add_column :android_store_listings, :developer_id, :integer, index: true
   end
 end

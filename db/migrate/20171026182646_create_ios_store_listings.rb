@@ -9,7 +9,6 @@ class CreateIosStoreListings < ActiveRecord::Migration[5.1]
       t.float :price
       t.float :rating
       t.integer :rating_count
-      t.string :category
       t.string :track_number, index: true
       t.datetime :parsed_at
       t.datetime :created_at, null: false

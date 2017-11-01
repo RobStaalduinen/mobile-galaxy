@@ -5,6 +5,7 @@ class IosSearchTerm < ActiveRecord::Base
   end
 
   def should_parse?
-    return true unless self.parsted_at.present? && self.parsed_at >= Time.now - 1.week
+    return true unless self.parsed_at.present? && self.parsed_at >= Time.now - 1.week
   end
+  
 end

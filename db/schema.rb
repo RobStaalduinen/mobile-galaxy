@@ -15,6 +15,24 @@ ActiveRecord::Schema.define(version: 20171031145258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "android_store_listings", force: :cascade do |t|
+    t.string "name"
+    t.string "package"
+    t.text "description"
+    t.float "price"
+    t.float "rating"
+    t.integer "rating_count"
+    t.string "store_url"
+    t.string "installs"
+    t.datetime "parsed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "developer_id"
+    t.string "cover_image_url"
+    t.index ["name"], name: "index_android_store_listings_on_name"
+    t.index ["package"], name: "index_android_store_listings_on_package"
+  end
+
   create_table "app_genres", force: :cascade do |t|
     t.string "genreable_type"
     t.bigint "genreable_id"
@@ -53,7 +71,6 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.float "price"
     t.float "rating"
     t.integer "rating_count"
-    t.string "category"
     t.string "track_number"
     t.datetime "parsed_at"
     t.datetime "created_at", null: false
@@ -71,25 +88,6 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.datetime "updated_at", null: false
     t.index ["recommended_listing_id"], name: "index_recommendations_on_recommended_listing_id"
     t.index ["store_listing_id"], name: "index_recommendations_on_store_listing_id"
-  end
-
-  create_table "store_listings", force: :cascade do |t|
-    t.string "name"
-    t.string "package"
-    t.text "description"
-    t.float "price"
-    t.float "rating"
-    t.integer "rating_count"
-    t.string "category"
-    t.string "store_url"
-    t.string "installs"
-    t.datetime "parsed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "developer_id"
-    t.string "cover_image_url"
-    t.index ["name"], name: "index_store_listings_on_name"
-    t.index ["package"], name: "index_store_listings_on_package"
   end
 
 end
