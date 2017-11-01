@@ -1,18 +1,16 @@
 class IosStoreListing < ActiveRecord::Base
+  include Genreable
   belongs_to :developer, optional: true
-  has_many :ios_genres
-  has_many :genres, through: :ios_genres
-  has_many :students, :through => :course_students
   # has_many :recommendations
 
   scope :parsed, -> { where.not(parsed_at: nil) }
 
   def self.create_from_search_result(result)
-    # Filter out already created apps and non-game apps
-    return nil if IosStoreListing.where(bundle: result["bundleId"]).count > 0 ||
-                  result["primaryGenreName"] != "Games"
+    listing = IosStoreListing.find_by(bundle: result["bundleId"]) || IosStoreListing.new
 
-    listing = IosStoreListing.create(
+    return nil unless listing.should_parse?
+                  
+    listing.update(
       name: result["trackName"],
       bundle: result["bundleId"],
       description: result["description"],
@@ -21,19 +19,23 @@ class IosStoreListing < ActiveRecord::Base
       rating: result["averageUserRating"],
       rating_count: result ["userRatingCount"],
       track_number: result["trackId"],
+      developer: Developer.find_or_create_by(name: result["artistName"]),
       parsed_at: Time.now
     )
 
-    result["genres"].reject {|genre| genre == "Games"}.each do |genre|
-      IosGenre.create(
-        genre: Genre.find_or_create_by(name: genre),
-        ios_store_listing: listing
-      )
-    end
+    listing.process_genres(result["genres"])
 
-    listing.update(developer: Developer.find_or_create_by({ name: result["artistId"] }))
+    listing.save
 
     listing
+  end
+
+  def process_genres(genre_list)
+    genre_list.reject {|genre| genre == "Games"}.each { |genre_name| add_genre(genre_name) }
+  end
+
+  def should_parse?
+    return true unless self.parsed_at.present? && self.parsed_at >= Time.now - 1.week
   end
 
   def similar_search_terms

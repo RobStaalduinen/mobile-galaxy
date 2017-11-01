@@ -15,6 +15,16 @@ ActiveRecord::Schema.define(version: 20171031145258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "app_genres", force: :cascade do |t|
+    t.string "genreable_type"
+    t.bigint "genreable_id"
+    t.integer "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_app_genres_on_genre_id"
+    t.index ["genreable_type", "genreable_id"], name: "index_app_genres_on_genreable_type_and_genreable_id"
+  end
+
   create_table "developers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -28,19 +38,10 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.index ["name"], name: "index_genres_on_name"
   end
 
-  create_table "ios_genres", force: :cascade do |t|
-    t.integer "ios_store_listing_id"
-    t.integer "genre_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["genre_id"], name: "index_ios_genres_on_genre_id"
-    t.index ["ios_store_listing_id"], name: "index_ios_genres_on_ios_store_listing_id"
-  end
-
   create_table "ios_search_terms", force: :cascade do |t|
-    t.string "term"
+    t.string "name"
     t.datetime "parsed_at", default: "1970-01-01 00:00:00"
-    t.index ["term"], name: "index_ios_search_terms_on_term"
+    t.index ["name"], name: "index_ios_search_terms_on_name"
   end
 
   create_table "ios_store_listings", force: :cascade do |t|
