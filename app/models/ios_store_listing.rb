@@ -6,13 +6,13 @@ class IosStoreListing < ActiveRecord::Base
   scope :parsed, -> { where.not(parsed_at: nil) }
 
   def self.create_from_search_result(result)
-    listing = IosStoreListing.find_by(bundle: result["bundleId"]) || IosStoreListing.new
+    listing = IosStoreListing.find_by(package: result["bundleId"]) || IosStoreListing.new
 
     return nil unless listing.should_parse?
                   
     listing.update(
       name: result["trackName"],
-      bundle: result["bundleId"],
+      package: result["bundleId"],
       description: result["description"],
       icon_url: result["artworkUrl100"],
       price: result["price"],

@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20171031145258) do
 
   create_table "ios_store_listings", force: :cascade do |t|
     t.string "name"
-    t.string "bundle"
+    t.string "package"
     t.text "description"
     t.string "icon_url"
     t.integer "developer_id"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.datetime "parsed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bundle"], name: "index_ios_store_listings_on_bundle"
     t.index ["name"], name: "index_ios_store_listings_on_name"
+    t.index ["package"], name: "index_ios_store_listings_on_package"
     t.index ["track_number"], name: "index_ios_store_listings_on_track_number"
   end
 

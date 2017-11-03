@@ -2,7 +2,7 @@ class CreateIosStoreListings < ActiveRecord::Migration[5.1]
   def change
     create_table :ios_store_listings do |t|
       t.string :name, index: true
-      t.string :bundle, index: true
+      t.string :package, index: true
       t.text :description
       t.string :icon_url
       t.integer :developer_id
