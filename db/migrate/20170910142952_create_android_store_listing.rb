@@ -3,6 +3,7 @@ class CreateAndroidStoreListing < ActiveRecord::Migration[5.1]
     create_table :android_store_listings do |t|
       t.string :name, index: true
       t.string :package, index: true
+      t.integer :developer_id
       t.text :description
       t.float :price
       t.float :rating
