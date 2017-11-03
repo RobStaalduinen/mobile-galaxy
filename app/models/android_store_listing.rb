@@ -1,11 +1,6 @@
-class AndroidStoreListing < ActiveRecord::Base
-  include Genreable
-  include Parseable
-
+class AndroidStoreListing < BaseStoreListing
   belongs_to :developer, optional: true
   has_many :recommendations
-
-  scope :parsed, -> { where.not(parsed_at: nil) }
 
   def parse
     self.update(

@@ -1,11 +1,7 @@
-class IosStoreListing < ActiveRecord::Base
-  include Genreable
-  include Parseable
-  
+class IosStoreListing < BaseStoreListing
+
   belongs_to :developer, optional: true
   # has_many :recommendations
-
-  scope :parsed, -> { where.not(parsed_at: nil) }
 
   def self.create_from_search_result(result)
     listing = IosStoreListing.find_by(package: result["bundleId"]) || IosStoreListing.new
@@ -34,10 +30,6 @@ class IosStoreListing < ActiveRecord::Base
 
   def process_genres(genre_list)
     genre_list.reject {|genre| genre == "Games"}.each { |genre_name| add_genre(genre_name) }
-  end
-
-  def should_parse?
-    return true unless self.parsed_at.present? && self.parsed_at >= Time.now - 1.week
   end
 
 end
