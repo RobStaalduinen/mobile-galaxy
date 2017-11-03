@@ -1,6 +1,6 @@
 class AndroidStoreListing < BaseStoreListing
   belongs_to :developer, optional: true
-  has_many :recommendations
+  # has_many :recommendations
 
   def parse
     self.update(
@@ -24,7 +24,6 @@ class AndroidStoreListing < BaseStoreListing
   def process_similar
     app.similar.each do |s|
       listing = AndroidStoreListing.find_or_create_by(package: s[:package])
-      self.recommendations.create(recommended_listing: listing, rating: 1)
     end
   end
 
