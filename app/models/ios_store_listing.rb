@@ -1,5 +1,7 @@
 class IosStoreListing < ActiveRecord::Base
   include Genreable
+  include Parseable
+  
   belongs_to :developer, optional: true
   # has_many :recommendations
 
@@ -38,9 +40,4 @@ class IosStoreListing < ActiveRecord::Base
     return true unless self.parsed_at.present? && self.parsed_at >= Time.now - 1.week
   end
 
-  def similar_search_terms
-    text_tagger = EngTagger.new
-    tagged = text_tagger.add_tags(self.description)
-    text_tagger.get_nouns(tagged).keys.each{ |key| key.downcase }.uniq
-  end
 end

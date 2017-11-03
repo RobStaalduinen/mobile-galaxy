@@ -14,7 +14,7 @@ class ProcessIosListingJob < ActiveJob::Base
 
       next if listing.blank?
 
-      listing.similar_search_terms.each do |term|
+      listing.get_unique_nouns.each do |term|
         search_term = IosSearchTerm.create(name: term)
         search_term.process
       end

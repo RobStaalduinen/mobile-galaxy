@@ -1,5 +1,6 @@
 class AndroidStoreListing < ActiveRecord::Base
   include Genreable
+  include Parseable
 
   belongs_to :developer, optional: true
   has_many :recommendations
