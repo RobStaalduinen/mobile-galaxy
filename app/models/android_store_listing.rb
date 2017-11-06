@@ -1,4 +1,8 @@
-class AndroidStoreListing < BaseStoreListing
+class AndroidStoreListing < ActiveRecord::Base
+  include Genreable
+  include Parseable
+
+  scope :parsed, -> { where.not(parsed_at: nil) }
   belongs_to :developer, optional: true
   # has_many :recommendations
 
@@ -31,4 +35,9 @@ class AndroidStoreListing < BaseStoreListing
     @app ||= MarketBot::Play::App.new(self.package).update
   end
 
+  def should_parse?
+    return true unless self.parsed_at.present? && self.parsed_at >= Time.now - 1.week
+  end
+
+  validates :package, presence: true
 end

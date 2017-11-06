@@ -8,7 +8,7 @@ class TestData
     TestData.apps
   end
 
-  def self.autocomplete
+  def self.test_autocomplete
     TestData.apps
   end
 

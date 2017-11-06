@@ -19,7 +19,7 @@ class IosListingsController < ApplicationController
     @recommendations = TestData.test_recommendations
   end
 
-  def update
+  def record_event
     @base_listing = TestData.test_app
     @recommendation = TestData.test_recommendations.last
 
