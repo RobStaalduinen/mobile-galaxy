@@ -1,16 +1,24 @@
 class AndroidStoreListing < ActiveRecord::Base
   include Genreable
   include Parseable
+  include Recommendable
 
   scope :parsed, -> { where.not(parsed_at: nil) }
   belongs_to :developer, optional: true
-  # has_many :recommendations
+
+  has_many :app_links, as: :base
+  has_many :recommendations, through: :app_links, source_type: "AndroidStoreListing"
+  has_many :inverse_app_links, :class_name => "AppLink", :foreign_key => "recommendation_id"
+  has_many :inverse_recommendations, :through => :inverse_app_links, :source => :base, source_type: "AndroidStoreListing"
 
   def parse
+    # sanitize description
+    description = ActionView::Base.full_sanitizer.sanitize(app.description)
+
     self.update(
       name: app.title,
       package: app.package,
-      description: app.description,
+      description: description,
       price: app.price,
       rating: app.rating,
       rating_count: app.votes,

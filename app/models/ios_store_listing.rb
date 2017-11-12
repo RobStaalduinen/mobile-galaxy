@@ -1,11 +1,11 @@
 class IosStoreListing < ActiveRecord::Base
   include Genreable
   include Parseable
+  include Recommendable
 
   scope :parsed, -> { where.not(parsed_at: nil) }
 
   belongs_to :developer, optional: true
-  # has_many :recommendations
 
   def self.create_from_search_result(result)
     listing = IosStoreListing.find_by(package: result["bundleId"]) || IosStoreListing.new

@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20171031145258) do
   create_table "android_store_listings", force: :cascade do |t|
     t.string "name"
     t.string "package"
+    t.integer "developer_id"
     t.text "description"
     t.float "price"
     t.float "rating"
@@ -27,7 +28,6 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.datetime "parsed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "developer_id"
     t.string "cover_image_url"
     t.index ["name"], name: "index_android_store_listings_on_name"
     t.index ["package"], name: "index_android_store_listings_on_package"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_app_genres_on_genre_id"
     t.index ["genreable_type", "genreable_id"], name: "index_app_genres_on_genreable_type_and_genreable_id"
+  end
+
+  create_table "app_links", force: :cascade do |t|
+    t.string "base_type"
+    t.bigint "base_id"
+    t.string "recommendation_type"
+    t.bigint "recommendation_id"
+    t.integer "similarity", default: 1
+    t.integer "user_activity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["base_type", "base_id"], name: "index_app_links_on_base_type_and_base_id"
+    t.index ["recommendation_type", "recommendation_id"], name: "index_app_links_on_recommendation_type_and_recommendation_id"
   end
 
   create_table "developers", force: :cascade do |t|
@@ -65,9 +78,9 @@ ActiveRecord::Schema.define(version: 20171031145258) do
   create_table "ios_store_listings", force: :cascade do |t|
     t.string "name"
     t.string "package"
+    t.integer "developer_id"
     t.text "description"
     t.string "icon_url"
-    t.integer "developer_id"
     t.float "price"
     t.float "rating"
     t.integer "rating_count"
@@ -77,17 +90,6 @@ ActiveRecord::Schema.define(version: 20171031145258) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_ios_store_listings_on_name"
     t.index ["package"], name: "index_ios_store_listings_on_package"
-    t.index ["track_number"], name: "index_ios_store_listings_on_track_number"
-  end
-
-  create_table "recommendations", force: :cascade do |t|
-    t.bigint "store_listing_id"
-    t.integer "recommended_listing_id"
-    t.integer "rating", default: 1
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["recommended_listing_id"], name: "index_recommendations_on_recommended_listing_id"
-    t.index ["store_listing_id"], name: "index_recommendations_on_store_listing_id"
   end
 
 end
