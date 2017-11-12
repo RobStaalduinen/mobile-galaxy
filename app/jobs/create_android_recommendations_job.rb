@@ -20,9 +20,15 @@ class CreateAndroidRecommendationsJob < ActiveJob::Base
       # puts "VERB: #{verb_score}"
       # puts "TOTAL: #{noun_score + verb_score}"
       # puts " "
-      puts adj_score
-      count += 1 if noun_score + adj_score > 10
+      # puts adj_score
+      # count += 1 if noun_score + adj_score > 10
+
+      similarity = (2 * noun_score) + adj_score
+
+      next if similarity < AppLink::RECOMMENDATION_CUTOFF
+
+      AppLink.create(base: store_listing, recommendation: potential_listing, similarity: similarity)
     end
-    puts "COUNT IS #{count}"
+    # puts "COUNT IS #{count}"
   end
 end
