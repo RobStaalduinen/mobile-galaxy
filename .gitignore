@@ -42,3 +42,10 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore secrets
+/config/application.*.yml
+/config/database.*.yml
+/config/google-service-account.*.*
+/config/google_drive.json
+/config/ec2.yml
