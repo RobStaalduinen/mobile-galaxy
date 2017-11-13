@@ -8,7 +8,7 @@ end
 gem "pkg-config"
 
 gem 'rails', '~> 5.1.4'
-gem 'nokogiri', '~> 1.6'
+gem 'nokogiri', '1.6.4.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
