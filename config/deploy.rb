@@ -3,8 +3,6 @@ lock '~> 3.0'
 
 server '95.85.55.212', port: 22, user: 'deploy', roles: [:web, :app, :db], primary: true
 
-set :bundle_env_variables, { 'NOKOGIRI_USE_SYSTEM_LIBRARIES' => 1 }
-
 set :application, 'mobile-galaxy'
 set :repo_url, 'git@github.com:RobStaalduinen/mobile-galaxy.git'
 set :branch, 'master'
@@ -34,5 +32,4 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/locks',
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
-after 'passenger:restart', 'cache:clear'
 after 'passenger:restart', 'deploy:link_sidekiq_assets'
