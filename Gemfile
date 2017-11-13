@@ -19,6 +19,7 @@ gem 'redis-namespace', '~> 1.5.3'
 gem 'figaro'
 gem 'itunes-search-api'
 gem 'engtagger'
+gem "pkg-config"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
