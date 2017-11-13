@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem "pkg-config"
+
 gem 'rails', '~> 5.1.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -19,7 +21,6 @@ gem 'redis-namespace', '~> 1.5.3'
 gem 'figaro'
 gem 'itunes-search-api'
 gem 'engtagger'
-gem "pkg-config"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
