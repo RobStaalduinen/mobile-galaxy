@@ -311,6 +311,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   market_bot
+  nokogiri (~> 1.6)
   pg (~> 0.20.0)
   pkg-config
   pry
