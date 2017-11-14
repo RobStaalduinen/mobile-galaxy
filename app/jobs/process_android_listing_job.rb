@@ -5,6 +5,9 @@ class ProcessAndroidListingJob < ActiveJob::Base
     store_listing.parse
     store_listing.process_similar
 
+  rescue
+    
+  ensure
     next_job = AndroidStoreListing.where(parsed_at: nil).first
     ProcessAndroidListingJob.set(wait: 1.second).perform_later(next_job)
   end
