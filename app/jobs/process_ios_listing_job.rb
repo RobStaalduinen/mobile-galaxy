@@ -20,7 +20,7 @@ class ProcessIosListingJob < ActiveJob::Base
     end
 
     # Queue next job - queueing one at a time reduces load on Redis/memory
-   new_term = IosSearchTerm.where("parsed_at < ?", Time.now - 2.weeks)
+   new_term = IosSearchTerm.where("parsed_at < ?", Time.now - 2.weeks).first
    ProcessIosListingJob.perform_later(new_term)
   end
 
