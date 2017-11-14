@@ -15,10 +15,13 @@ class ProcessIosListingJob < ActiveJob::Base
       next if listing.blank?
 
       listing.get_unique_nouns.each do |term|
-        search_term = IosSearchTerm.create(name: term)
-        search_term.process
+        search_term = IosSearchTerm.create(name: term) unless IosSearchTerm.where(name: term).count > 0
       end
     end
+
+    # Queue next job - queueing one at a time reduces load on Redis/memory
+   new_term = IosSearchTerm.where("parsed_at < ?", Time.now - 2.weeks)
+   ProcessIosListingJob.perform_later(new_term)
   end
 
 end
