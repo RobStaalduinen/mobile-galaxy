@@ -2,7 +2,7 @@ class ProcessIosListingJob < ActiveJob::Base
   queue_as :ios_scraping
 
   def perform(ios_search_term)
-    return nil unless ios_search_term.should_parse?
+    raise StandardError unless ios_search_term.should_parse?
 
     ios_search_term.update(parsed_at: Time.now)
 
