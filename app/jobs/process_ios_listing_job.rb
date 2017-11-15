@@ -6,18 +6,27 @@ class ProcessIosListingJob < ActiveJob::Base
 
     ios_search_term.update(parsed_at: Time.now)
 
-    search_results = ITunesSearchAPI.search(term: ios_search_term.name, media: "software") \
-                                    .select{ |listing| listing["primaryGenreName"] == "Games" }
+    binding.pry
 
-    search_results.each do |ios_listing|
-      listing = IosStoreListing.create_from_search_result(ios_listing)
+    search_results = Itunes.search(term: ios_search_term.name, media: "software")
 
-      next if listing.blank?
+    binding.pry
+    offset = 0
+    while search_results.any?
+      search_results = search_results.select{ |listing| listing["primaryGenreName"] == "Games" }
 
-      listing.get_unique_nouns.each do |term|
-        search_term = IosSearchTerm.new(name: term) 
-        search_term.save
+      search_results.each do |ios_listing|
+        listing = IosStoreListing.create_from_search_result(ios_listing)
+
+        next if listing.blank?
+
+        listing.get_unique_nouns.each do |term|
+          search_term = IosSearchTerm.new(name: term) 
+          search_term.save
+        end
       end
+
+      search_results = Itunes.search(term: ios_search_term.name, media: "software", offset: offset+=50)
     end
 
   rescue
