@@ -2,6 +2,8 @@ class ProcessAndroidListingJob < ActiveJob::Base
   queue_as :android_scraping
 
   def perform(store_listing)
+    store_listing.update(parsed_at: Time.now)
+    
     store_listing.parse
     store_listing.process_similar
 

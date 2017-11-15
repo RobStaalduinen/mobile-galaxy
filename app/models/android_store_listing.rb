@@ -24,8 +24,7 @@ class AndroidStoreListing < ActiveRecord::Base
       rating_count: app.votes,
       store_url: app.store_url,
       cover_image_url: app.cover_image_url,
-      installs: app.installs,
-      parsed_at: Time.now
+      installs: app.installs
     )
 
     self.add_genre(app.category)
