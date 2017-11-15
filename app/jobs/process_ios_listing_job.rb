@@ -6,11 +6,8 @@ class ProcessIosListingJob < ActiveJob::Base
 
     ios_search_term.update(parsed_at: Time.now)
 
-    binding.pry
-
     search_results = Itunes.search(term: ios_search_term.name, media: "software")
 
-    binding.pry
     offset = 0
     while search_results.any?
       search_results = search_results.select{ |listing| listing["primaryGenreName"] == "Games" }
