@@ -9,6 +9,6 @@ class ProcessAndroidListingJob < ActiveJob::Base
     
   ensure
     next_job = AndroidStoreListing.where(parsed_at: nil).first
-    ProcessAndroidListingJob.set(wait: 1.second).perform_later(next_job)
+    ProcessAndroidListingJob.perform_later(next_job)
   end
 end
