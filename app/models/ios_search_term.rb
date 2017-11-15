@@ -8,4 +8,5 @@ class IosSearchTerm < ActiveRecord::Base
     return true unless self.parsed_at.present? && self.parsed_at >= Time.now - 1.week
   end
   
+  validates_uniqueness_of :name
 end

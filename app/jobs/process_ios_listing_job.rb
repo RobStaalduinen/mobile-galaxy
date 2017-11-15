@@ -15,7 +15,8 @@ class ProcessIosListingJob < ActiveJob::Base
       next if listing.blank?
 
       listing.get_unique_nouns.each do |term|
-        search_term = IosSearchTerm.create(name: term) unless IosSearchTerm.where(name: term).count > 0
+        search_term = IosSearchTerm.new(name: term) 
+        search_term.save
       end
     end
 

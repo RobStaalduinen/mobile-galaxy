@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031145258) do
+ActiveRecord::Schema.define(version: 20171115095015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20171031145258) do
   create_table "ios_search_terms", force: :cascade do |t|
     t.string "name"
     t.datetime "parsed_at", default: "1970-01-01 00:00:00"
-    t.index ["name"], name: "index_ios_search_terms_on_name"
+    t.index ["name"], name: "index_ios_search_terms_on_name", unique: true
   end
 
   create_table "ios_store_listings", force: :cascade do |t|
